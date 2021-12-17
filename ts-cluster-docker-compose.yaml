@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+  typesense1:
+    image: typesense/typesense:0.21.0
+    container_name: typesense1
+    volumes:
+      - ./.data/typesense1/data:/data
+      - ./ts-nodes.txt:/nodes.txt
+    environment:
+      - "TYPESENSE_DATA_DIR=/data"
+      - "TYPESENSE_API_KEY=TEST"
+      - "TYPESENSE_THREAD_POOL_SIZE=96"
+      - "TYPESENSE_NODES=/nodes.txt"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 8117:8107
+      - 8118:8108
+  typesense2:
+    image: typesense/typesense:0.21.0
+    container_name: typesense2
+    volumes:
+      - ./.data/typesense2/data:/data
+      - ./ts-nodes.txt:/nodes.txt
+    environment:
+      - "TYPESENSE_DATA_DIR=/data"
+      - "TYPESENSE_API_KEY=TEST"
+      - "TYPESENSE_THREAD_POOL_SIZE=96"
+      - "TYPESENSE_NODES=/nodes.txt"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 8127:8107
+      - 8128:8108
+    depends_on: 
+      - typesense1
+  typesense3:
+    image: typesense/typesense:0.21.0
+    container_name: typesense3
+    volumes:
+      - ./.data/typesense3/data:/data
+      - ./ts-nodes.txt:/nodes.txt
+    environment:
+      - "TYPESENSE_DATA_DIR=/data"
+      - "TYPESENSE_API_KEY=TEST"
+      - "TYPESENSE_THREAD_POOL_SIZE=96"
+      - "TYPESENSE_NODES=/nodes.txt"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 8137:8107
+      - 8138:8108
+    depends_on: 
+      - typesense2
+  

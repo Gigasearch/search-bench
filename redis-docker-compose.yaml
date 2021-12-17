@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  redisearch:
+    image: redislabs/redisearch:latest
+    container_name: redisearch
+    volumes:
+      - "./redis.conf:/usr/local/etc/redis/redis.conf"
+      - "./.data/redis/data:/data"
+    command: ["redis-server", "--loadmodule", "/usr/lib/redis/modules/redisearch.so", "CONCURRENT_WRITE_MODE", "FORK_GC_RUN_INTERVAL", "240", "FORK_GC_CLEAN_THRESHOLD", "10000"]
+
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 6379:6379

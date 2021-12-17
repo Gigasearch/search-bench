@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:13-alpine
+    container_name: postgres
+    volumes:
+      - "./.data/postgres/db:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: pages
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 15432:5432
